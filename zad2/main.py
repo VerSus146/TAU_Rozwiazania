@@ -29,6 +29,7 @@ class MainUnitTests(unittest.TestCase):
         self.logger.info("Get all graphics card links on main page")
         temp = self.driver.find_elements(By.CLASS_NAME, "nodec")
 
+        found = False
         for a in temp:
             if "RTX 3060-Ti" in a.accessible_name:
                 a.click()
@@ -43,7 +44,11 @@ class MainUnitTests(unittest.TestCase):
             if "RTX 3070" in a.accessible_name:
                 a.click()
                 self.logger.info("Picking RTX 3070 as comparison")
+                found = True
                 break
+
+        if not found:
+            self.fail("Phone not found!")
 
         self.logger.info("Getting GameEFps score")
         temp = self.driver.find_element(By.CLASS_NAME, "boxthumb.comp-headerwrapper.comp-headerwrapper-dropdown.dropdown")
